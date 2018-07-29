@@ -31,7 +31,7 @@ namespace BanlineaTest.Controllers
 
                     if (user != null && user.Password == userSession.Pwd)
                     {
-                        SessionResponse sessionResponse = new SessionResponse(email.Address, user.Name);
+                        SessionResponse sessionResponse = new SessionResponse(user.Id, email.Address, user.Name);
                         return Json(sessionResponse);
                     }
                     else
@@ -62,11 +62,14 @@ namespace BanlineaTest.Controllers
 
     public class SessionResponse
     {
-        public SessionResponse(string Email, string Name)
+        public SessionResponse(int Id, string Email, string Name)
         {
+            this.Id = Id;
             this.Email = Email;
             this.Name = Name;
         }
+
+        public int Id { get; set; }
 
         public string Email { set; get; }
 

@@ -9,10 +9,11 @@ import { User } from '../interfaces/user';
     styleUrls: ['./navmenu.component.css']
 })
 export class NavMenuComponent {
-    constructor(private session: SessionService) { }
+    constructor(public session: SessionService, private router: Router) { }
 
     public logOut() {
         if (this.session.user !== undefined && this.session.user.email !== undefined && this.session.user.name !== undefined) {
+            this.router.navigate(['./signin']);
             window.location.replace(window.location.pathname + window.location.search + window.location.hash);
         }
     }

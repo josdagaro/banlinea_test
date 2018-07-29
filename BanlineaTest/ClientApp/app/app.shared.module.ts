@@ -11,6 +11,7 @@ import { UsersComponent } from './components/users/users.component';
 import { SignUpComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SessionService } from './components/session/session.service';
+import { UsersService } from './components/users/users.service';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,10 @@ import { SessionService } from './components/session/session.service';
             { path: '**', redirectTo: 'profile' }
         ])
     ],
-    providers: [SessionService]
+    providers: [
+        SessionService,
+        UsersService
+    ]
 })
 export class AppModuleShared {
 }

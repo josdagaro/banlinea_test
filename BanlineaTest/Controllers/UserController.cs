@@ -30,6 +30,11 @@ namespace BanlineaTest.Controllers
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(int id)
         {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
             return Json(this.userDataContext.Users.Find(id));
         }
 

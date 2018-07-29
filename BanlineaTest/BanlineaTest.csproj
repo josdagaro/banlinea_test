@@ -25,6 +25,7 @@
     <None Remove="ClientApp\app\components\interfaces\user.ts" />
     <None Remove="ClientApp\app\components\profile\profile.component.ts" />
     <None Remove="ClientApp\app\components\session\session.service.ts" />
+    <None Remove="ClientApp\app\components\users\users.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +36,7 @@
     <TypeScriptCompile Include="ClientApp\app\components\interfaces\user.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\profile\profile.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\session\session.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\users\users.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
