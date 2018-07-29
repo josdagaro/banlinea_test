@@ -29,7 +29,7 @@ namespace BanlineaTest.Controllers
                 {
                     var user = this.userDataContext.Users.Find(email.UserId);
 
-                    if (user != null)
+                    if (user != null && user.Password == userSession.Pwd)
                     {
                         SessionResponse sessionResponse = new SessionResponse(email.Address, user.Name);
                         return Json(sessionResponse);

@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { SignInComponent } from './components/signin/signin.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
+import { UsersComponent } from './components/users/users.component';
 import { SignUpComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SessionService } from './components/session/session.service';
@@ -17,7 +17,7 @@ import { SessionService } from './components/session/session.service';
         AppComponent,
         NavMenuComponent,
         SignUpComponent,
-        FetchDataComponent,
+        UsersComponent,
         SignInComponent,
         ProfileComponent
     ],
@@ -30,7 +30,7 @@ import { SessionService } from './components/session/session.service';
             { path: 'signin', component: SignInComponent },
             { path: 'signup', component: SignUpComponent },
             { path: 'profile', component: ProfileComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
+            { path: 'users', component: UsersComponent },
             { path: '**', redirectTo: 'profile' }
         ])
     ],
