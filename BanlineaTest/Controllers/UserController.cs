@@ -28,23 +28,23 @@ namespace BanlineaTest.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Json(this.userDataContext.Users.Find(id));
         }
-        
+
         // POST: api/User
         [HttpPost]
         public void Post([FromBody]string value)
         {
         }
-        
+
         // PUT: api/User/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)

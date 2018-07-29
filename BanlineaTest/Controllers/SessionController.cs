@@ -4,25 +4,52 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using User.Data;
 
 namespace BanlineaTest.Controllers
 {
     [Route("api/[controller]")]
     public class SessionController : Controller
-
     {
-        [HttpPost("[action]")]
-        public IActionResult Start([FromBody]User user)
+        private readonly UserDataContext userDataContext;
+
+        public SessionController(UserDataContext userDataContext)
         {
-            if (ModelState.IsValid) {
-                return Json(user);
+            this.userDataContext = userDataContext;
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult Start([FromBody]UserSession userSession)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = this.userDataContext.Emails.Where(em => em.Address == userSession.Email).ToList();
+                Email email = result.First();
+
+                if (email != null)
+                {
+                    var user = this.userDataContext.Users.Find(email.UserId);
+
+                    if (user != null)
+                    {
+                        return Json(user);
+                    }
+                    else
+                    {
+                        NotFound();
+                    }
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
 
             return BadRequest();
         }
     }
 
-    public class User
+    public class UserSession
     {
         [Required]
         public string Email { set; get; }
