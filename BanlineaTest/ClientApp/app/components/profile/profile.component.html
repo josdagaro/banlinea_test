@@ -9,19 +9,24 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
-                    <label for="first_name">Name: {{ profile.name }}</label>
+                    <label for="first_name">Name:</label>
+                    <input type="text" class="form-control" id="first_name" [(ngModel)]="profile.name" />
                 </div>
                 <div class="form-group">
-                    <label for="last_name">Last name: {{ profile.lastName }}</label>
+                    <label for="last_name">Last name:</label>
+                    <input type="text" class="form-control" id="last_name" [(ngModel)]="profile.lastName" />
                 </div>
                 <div class="form-group">
-                    <label for="document_id">Document type ID: {{ profile.documentTypeId }}</label>
+                    <label for="document_type_id">Document type ID:</label>
+                    <input type="number" class="form-control" id="document_type_id" [(ngModel)]="profile.documentTypeId" />
                 </div>
                 <div class="form-group">
-                    <label for="document_id">Document ID: {{ profile.documentId }}</label>
+                    <label for="document_id">Document ID:</label>
+                    <input type="number" class="form-control" id="document_id" [(ngModel)]="profile.documentId" />
                 </div>
                 <div class="form-group">
-                    <label for="mobile_number">Mobile number: {{ profile.mobileNumber }}</label>
+                    <label for="mobile_number">Mobile number:</label>
+                    <input type="number" class="form-control" id="mobile_number" [(ngModel)]="profile.mobileNumber" />
                 </div>
                 <div class="form-group">
                     <label for="email">Email addresses:</label>

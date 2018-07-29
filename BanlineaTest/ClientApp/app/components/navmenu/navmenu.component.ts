@@ -13,8 +13,8 @@ export class NavMenuComponent {
 
     public logOut() {
         if (this.session.user !== undefined && this.session.user.email !== undefined && this.session.user.name !== undefined) {
-            this.router.navigate(['./signin']);
             window.location.replace(window.location.pathname + window.location.search + window.location.hash);
+            this.router.navigate(['./signin']);
         }
     }
 }

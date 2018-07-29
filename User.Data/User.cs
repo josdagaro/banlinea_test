@@ -18,7 +18,5 @@ namespace User.Data
         public string MobileNumber { get; set; }
 
         public string Password { get; set; }
-
-        public List<Email> Emails { get; set; } = new List<Email>();
     }
 }

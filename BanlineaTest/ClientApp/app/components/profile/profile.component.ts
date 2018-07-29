@@ -11,7 +11,7 @@ import { User } from '../interfaces/user';
 export class ProfileComponent {
     public profile: User;
 
-    constructor(session: SessionService, router: Router, usersService: UsersService) {
+    constructor(session: SessionService, router: Router, private usersService: UsersService) {
         if (session.user === undefined || session.user.email === undefined || session.user.name === undefined) {
             router.navigate(['./signin']);
         } else {
@@ -19,5 +19,9 @@ export class ProfileComponent {
                 this.profile = result.json() as User;
             }, error => alert('Error. Maybe the current user (you) has an invalid ID'));
         }
+    }
+
+    public update() {
+
     }
 }
