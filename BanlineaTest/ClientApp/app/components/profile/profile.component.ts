@@ -27,14 +27,19 @@ export class ProfileComponent {
                 this.usersService.getEmails(this.profile.id).subscribe(result => {
                     this.emails = result.json() as Email[];
                 }, error => alert('Server error at the moment of consulting user emails'));
-            }, error => alert('Error. Maybe the current user (you) has an invalid ID'));
+            }, error => {
+                alert('Error finding user: ' + error._body);
+                });
         }
     }
 
     public update() {
         this.usersService.update(this.profile).subscribe(result => {
             console.log(result);
-        }, error => alert('Updating process could not be completed'));
+        }, error => {
+            console.log(error);
+            alert('Updating process could not be completed: ' + error._body)
+        });
     }
 
     public addEmail() {

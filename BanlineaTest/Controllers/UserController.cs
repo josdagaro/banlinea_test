@@ -116,7 +116,11 @@ namespace BanlineaTest.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var message = string.Join(" | ", ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
+
+                return BadRequest(message);
             }
             else
             {
