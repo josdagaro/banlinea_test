@@ -6,30 +6,35 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { HomeComponent } from './components/home/home.component';
+import { SignInComponent } from './components/signin/signin.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
-import { CounterComponent } from './components/counter/counter.component';
+import { SignUpComponent } from './components/signup/signup.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SessionService } from './components/session/session.service';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CounterComponent,
+        SignUpComponent,
         FetchDataComponent,
-        HomeComponent
+        SignInComponent,
+        ProfileComponent
     ],
     imports: [
         CommonModule,
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
+            { path: '', redirectTo: 'signin', pathMatch: 'full' },
+            { path: 'signin', component: SignInComponent },
+            { path: 'signup', component: SignUpComponent },
+            { path: 'profile', component: ProfileComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: '**', redirectTo: 'home' }
+            { path: '**', redirectTo: 'profile' }
         ])
-    ]
+    ],
+    providers: [SessionService]
 })
 export class AppModuleShared {
 }

@@ -7,24 +7,29 @@
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
             </button>
-            <a class='navbar-brand' [routerLink]="['/home']">BanlineaTest</a>
+            <a class='navbar-brand' [routerLink]="['/home']">Banlinea Test</a>
         </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse'>
             <ul class='nav navbar-nav'>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/home']">
-                        <span class='glyphicon glyphicon-home'></span> Home
+                <li [routerLinkActive]="['link-active']" ng-show="!session.user || !session.user.email || !session.user.name">
+                    <a [routerLink]="['/signin']">
+                        <span class='glyphicon glyphicon-log-in'></span> Sign In
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" ng-show="!session.user || !session.user.email || !session.user.name">
+                    <a [routerLink]="['/signup']">
+                        <span class='glyphicon glyphicon-log-out'></span> Sign Up
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/counter']">
-                        <span class='glyphicon glyphicon-education'></span> Counter
+                    <a [routerLink]="['/profile']">
+                        <span class='glyphicon glyphicon-user'></span> Profile
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/fetch-data']">
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
+                    <a [routerLink]="['/users']">
+                        <span class='glyphicon glyphicon-th-list'></span> Users
                     </a>
                 </li>
             </ul>
