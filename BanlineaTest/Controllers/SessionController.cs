@@ -23,8 +23,7 @@ namespace BanlineaTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = this.userDataContext.Emails.Where(em => em.Address == userSession.Email).ToList();
-                Email email = result.First();
+                Email email = this.userDataContext.Emails.FirstOrDefault(mail => mail.Address == userSession.Email);
 
                 if (email != null)
                 {
@@ -32,11 +31,12 @@ namespace BanlineaTest.Controllers
 
                     if (user != null)
                     {
-                        return Json(user);
+                        SessionResponse sessionResponse = new SessionResponse(email.Address, user.Name);
+                        return Json(sessionResponse);
                     }
                     else
                     {
-                        NotFound();
+                        return NotFound();
                     }
                 }
                 else
@@ -58,5 +58,18 @@ namespace BanlineaTest.Controllers
         [MinLength(5)]
         [MaxLength(15)]
         public string Pwd { set; get; }
+    }
+
+    public class SessionResponse
+    {
+        public SessionResponse(string Email, string Name)
+        {
+            this.Email = Email;
+            this.Name = Name;
+        }
+
+        public string Email { set; get; }
+
+        public string Name { set; get; }
     }
 }

@@ -8,13 +8,11 @@ import { User } from '../interfaces/user';
     templateUrl: './signin.component.html'
 })
 export class SignInComponent {
-    private session: SessionService;
-
     public email: string;
 
     public pwd: string;
 
-    constructor(session: SessionService, router: Router) {
+    constructor(private session: SessionService, private router: Router) {
         if (session.user !== undefined && session.user.email !== undefined && session.user.name !== undefined) {
             router.navigate(['./profile']);
         }
@@ -28,11 +26,11 @@ export class SignInComponent {
                 this.session.user = result.json() as User;
 
                 if (this.session.user.email && this.session.user.name) {
-
+                    this.router.navigate(['./profile']);
                 } else {
                     alert(message);
                 }
-            }, error => console.error(error));
+            }, error => alert('Incorrect data'));
         } else {
             alert(message);
         }
