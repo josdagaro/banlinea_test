@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,39 +54,73 @@ namespace BanlineaTest.Controllers
 
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody]User.Data.User user)
+        public IActionResult Post([FromBody]User.Data.User user)
         {
             this.userDataContext.SaveChanges();
-            Ok();
+            return Ok();
+        }
+
+        // POST: api/User
+        [HttpPost("email/creation", Name = "CreateEmail")]
+        public IActionResult CreateEmail([FromBody]User.Data.Email email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                List<User.Data.Email> oldEmails = this.userDataContext.Emails.Where(old => old.Address == email.Address).ToList(); ;
+
+                if (oldEmails.Count() > 0)
+                {
+                    return BadRequest();
+                }
+
+                this.userDataContext.Emails.Add(email);
+                this.userDataContext.SaveChanges();
+                return Ok();
+            }
         }
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]User.Data.User user)
+        public IActionResult Put(int id, [FromBody]User.Data.User user)
         {
             if (id <= 0)
             {
-                NotFound();
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
             }
 
             this.userDataContext.Users.Update(user);
             this.userDataContext.SaveChanges();
-            Ok();
+            return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             if (id <= 0)
             {
-                NotFound();
+                return NotFound();
             }
 
             User.Data.User user = this.userDataContext.Users.Find(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             this.userDataContext.Users.Remove(user);
             this.userDataContext.SaveChanges();
-            Ok();
+            return Ok();
         }
     }
 }

@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\components\interfaces\email.ts" />
     <None Remove="ClientApp\app\components\interfaces\user.ts" />
     <None Remove="ClientApp\app\components\profile\profile.component.ts" />
     <None Remove="ClientApp\app\components\session\session.service.ts" />
@@ -33,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\interfaces\email.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\interfaces\user.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\profile\profile.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\session\session.service.ts" />

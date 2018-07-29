@@ -5,31 +5,35 @@
 <p *ngIf="!profile"><em>Loading...</em></p>
 
 <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
                     <label for="first_name">Name:</label>
-                    <input type="text" class="form-control" id="first_name" [(ngModel)]="profile.name" />
+                    <input type="text" class="form-control" id="first_name" [ngModel]="profile?.name" (ngModelChange)="profile.name = $event" />
                 </div>
                 <div class="form-group">
                     <label for="last_name">Last name:</label>
-                    <input type="text" class="form-control" id="last_name" [(ngModel)]="profile.lastName" />
+                    <input type="text" class="form-control" id="last_name" [ngModel]="profile?.lastName" (ngModelChange)="profile.lastName = $event" />
                 </div>
                 <div class="form-group">
                     <label for="document_type_id">Document type ID:</label>
-                    <input type="number" class="form-control" id="document_type_id" [(ngModel)]="profile.documentTypeId" />
+                    <select class="form-control" id="document_type_id" [ngModel]="profile?.documentTypeId" (ngModelChange)="profile.documentTypeId = $event">
+                        <option value="1">CC</option>
+                        <option value="2">NIT</option>
+                        <option value="3">TI</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="document_id">Document ID:</label>
-                    <input type="number" class="form-control" id="document_id" [(ngModel)]="profile.documentId" />
+                    <input type="number" class="form-control" id="document_id" [ngModel]="profile?.documentId" (ngModelChange)="profile.documentId = $event" />
                 </div>
                 <div class="form-group">
                     <label for="mobile_number">Mobile number:</label>
-                    <input type="number" class="form-control" id="mobile_number" [(ngModel)]="profile.mobileNumber" />
+                    <input type="number" class="form-control" id="mobile_number" [ngModel]="profile?.mobileNumber" (ngModelChange)="profile.mobileNumber = $event" />
                 </div>
                 <div class="form-group">
-                    <label for="email">Email addresses:</label>
+                    <label>Email addresses:</label>
                     <ul *ngIf="emails">
                         <li *ngFor="let email of emails">
                             {{ email.address }}
@@ -37,6 +41,18 @@
                     </ul>
                 </div>
                 <button class="btn btn-default" (click)="update()">Update</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-goup">
+                    <label for="new_email_address">New email:</label>
+                    <input type="email" class="form-control" id="new_email_address" [ngModel]="newEmailAddress" (ngModelChange)="newEmailAddress = $event" />
+                </div>
+                <br />
+                <button class="btn btn-primary" (click)="addEmail()">Add email</button>
             </div>
         </div>
     </div>

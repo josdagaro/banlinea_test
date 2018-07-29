@@ -1,6 +1,7 @@
 ﻿import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import { User } from '../interfaces/user';
+import { Email } from '../interfaces/email';
 
 @Injectable()
 export class UsersService {
@@ -16,5 +17,9 @@ export class UsersService {
 
     public getEmails(id: number) {
         return this.http.get(this.baseUrl + 'api/User/' + id + '/Emails');
+    }
+
+    public addEmail(email: object) {
+        return this.http.post(this.baseUrl + 'api/User/email/creation', email);
     }
 }

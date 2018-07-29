@@ -11,15 +11,20 @@ import { Email } from '../interfaces/email';
 })
 export class ProfileComponent {
     public profile: User;
+
     public emails: Email[];
 
-    constructor(session: SessionService, router: Router, private usersService: UsersService) {
-        if (session.user === undefined || session.user.email === undefined || session.user.name === undefined) {
+    //public newEmail: Email;
+
+    public newEmailAddress: string = '';
+
+    constructor(private session: SessionService, router: Router, private usersService: UsersService) {
+        if (this.session.user === undefined || this.session.user.email === undefined || this.session.user.name === undefined) {
             router.navigate(['./signin']);
         } else {
-            usersService.find(session.user.id).subscribe(result => {
+            this.usersService.find(this.session.user.id).subscribe(result => {
                 this.profile = result.json() as User;
-                usersService.getEmails(this.profile.id).subscribe(result => {
+                this.usersService.getEmails(this.profile.id).subscribe(result => {
                     this.emails = result.json() as Email[];
                 }, error => alert('Server error at the moment of consulting user emails'));
             }, error => alert('Error. Maybe the current user (you) has an invalid ID'));
@@ -30,5 +35,16 @@ export class ProfileComponent {
         this.usersService.update(this.profile).subscribe(result => {
             console.log(result);
         }, error => alert('Updating process could not be completed'));
+    }
+
+    public addEmail() {
+        var email = { address: this.newEmailAddress, userId: this.profile.id };
+
+        this.usersService.addEmail(email).subscribe(result => {
+            console.log(result);
+            this.usersService.getEmails(this.profile.id).subscribe(result => {
+                this.emails = result.json() as Email[];
+            }, error => alert('Server error at the moment of consulting user emails'));
+        }, error => alert('The email could not be added'));
     }
 }

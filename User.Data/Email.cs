@@ -10,6 +10,7 @@ namespace User.Data
         public int Id { get; set; }
 
         [Required]
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]
         public string Address { get; set; }
 
         [Required]

@@ -18,7 +18,7 @@
         <tr *ngFor="let user of users">
             <td>{{ user.name }}</td>
             <td>{{ user.lastName }}</td>
-            <td>{{ user.documentTypeId }}</td>
+            <td>{{ user.documentTypeId == 1 ? 'CC' : (user.documentTypeId == 2 ? 'NIT' : 'TI') }}</td>
             <td>{{ user.documentId }}</td>
             <td>{{ user.mobileNumber }}</td>
         </tr>
