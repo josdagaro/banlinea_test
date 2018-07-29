@@ -50,6 +50,8 @@ export class ProfileComponent {
             this.usersService.getEmails(this.profile.id).subscribe(result => {
                 this.emails = result.json() as Email[];
             }, error => alert('Server error at the moment of consulting user emails'));
-        }, error => alert('The email could not be added'));
+        }, error => {
+            alert('The email could not be added: ' + error._body);
+            });
     }
 }

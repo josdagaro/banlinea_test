@@ -12,6 +12,8 @@ export class UsersComponent {
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
         http.get(baseUrl + 'api/User').subscribe(result => {
             this.users = result.json() as User[];
-        }, error => console.error(error));
+        }, error => {
+            alert('Error getting users:' + error._body);
+        });
     }
 }

@@ -39,8 +39,12 @@ export class SignUpComponent {
             this.usersService.addEmail(email).subscribe(result => {
                 console.log(result)
                 this.router.navigate(['./signin']);
-            }, error => alert('The email could not be created'));
-        }, error => alert('User could not be created'));
+            }, error => {
+                alert('The email could not be created: ' + error._body);
+            });
+        }, error => {
+            alert('User could not be created: ' + error._body);
+        });
     }
 
     public clean() {
