@@ -13,4 +13,8 @@ export class UsersService {
     public update(user: User) {
         return this.http.put(this.baseUrl + 'api/User/' + user.id, user);
     }
+
+    public getEmails(id: number) {
+        return this.http.get(this.baseUrl + 'api/User/' + id + '/Emails');
+    }
 }

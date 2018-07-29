@@ -38,10 +38,25 @@ namespace BanlineaTest.Controllers
             return Json(this.userDataContext.Users.Find(id));
         }
 
+        // GET: api/User/5/5
+        [HttpGet("{id}/Emails", Name = "GetEmails")]
+        public IActionResult GetEmails(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
+            var emails = this.userDataContext.Emails.Where(email => email.UserId == id).ToList();
+            return Json(emails);
+        }
+
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]User.Data.User user)
         {
+            this.userDataContext.SaveChanges();
+            Ok();
         }
 
         // PUT: api/User/5
@@ -54,6 +69,7 @@ namespace BanlineaTest.Controllers
             }
 
             this.userDataContext.Users.Update(user);
+            this.userDataContext.SaveChanges();
             Ok();
         }
 
@@ -68,6 +84,7 @@ namespace BanlineaTest.Controllers
 
             User.Data.User user = this.userDataContext.Users.Find(id);
             this.userDataContext.Users.Remove(user);
+            this.userDataContext.SaveChanges();
             Ok();
         }
     }

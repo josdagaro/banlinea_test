@@ -30,6 +30,11 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email addresses:</label>
+                    <ul *ngIf="emails">
+                        <li *ngFor="let email of emails">
+                            {{ email.address }}
+                        </li>
+                    </ul>
                 </div>
                 <button class="btn btn-default" (click)="update()">Update</button>
             </div>
