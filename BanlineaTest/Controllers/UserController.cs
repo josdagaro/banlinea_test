@@ -62,7 +62,10 @@ namespace BanlineaTest.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var message = string.Join(" | ", ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
+                return BadRequest(message);
             }
 
             List<User.Data.User> oldUsers = this.userDataContext.Users.AsNoTracking().Where(old => old.DocumentTypeId == user.DocumentTypeId && old.DocumentId == user.DocumentId).ToList();
@@ -89,7 +92,10 @@ namespace BanlineaTest.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var message = string.Join(" | ", ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
+                return BadRequest(message);
             }
             else
             {
