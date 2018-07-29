@@ -32,5 +32,20 @@ namespace User.Data
         [MinLength(5)]
         [MaxLength(15)]
         public string Password { get; set; }
+
+        [RegularExpression(@"^[A-z\sñÑ]*$")]
+        public string ResidenceCountry { get; set; }
+
+        [RegularExpression(@"^[A-z\sñÑ]*$")]
+        public string ResidenceCity { get; set; }
+
+        [RegularExpression(@"^[0-9]*$")]
+        public Nullable<int> Age { get; set; }
+
+        [RegularExpression(@"^[A-z\sñÑ]*$")]
+        public string Address { get; set; }
+
+        [RegularExpression(@"^[A-z\sñÑ]*$")]
+        public string Company { get; set; }
     }
 }

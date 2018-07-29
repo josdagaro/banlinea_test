@@ -32,7 +32,7 @@ export class SignUpComponent {
     }
 
     public register() {
-        var user = { name: this.name, lastName: this.lastName, documentTypeId: this.documentTypeId, documentId: this.documentId, mobileNumber: this.mobileNumber, password: this.pwd };
+        var user = { name: this.name, lastName: this.lastName, documentTypeId: this.documentTypeId, documentId: this.documentId, mobileNumber: this.mobileNumber, password: this.pwd, residenceCountry: '', residenceCity: '', address: '', age: 0, company: '' };
         this.usersService.create(user).subscribe(result => {
             this.user = result.json() as User;
             var email = { address: this.email, userId: this.user.id };

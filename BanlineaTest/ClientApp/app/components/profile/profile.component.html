@@ -40,7 +40,6 @@
                         </li>
                     </ul>
                 </div>
-                <button class="btn btn-default" (click)="update()">Update</button>
             </div>
         </div>
     </div>
@@ -48,10 +47,33 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-goup">
+                    <label for="residence_country">Residence country:</label>
+                    <input type="text" class="form-control" id="residence_country" [ngModel]="profile?.residenceCountry" (ngModelChange)="profile.residenceCountry = $event" />
+                </div>
+                <div class="form-goup">
+                    <label for="residence_city">Residence city:</label>
+                    <input type="text" class="form-control" id="residence_city" [ngModel]="profile?.residenceCity" (ngModelChange)="profile.residenceCity = $event" />
+                </div>
+                <div class="form-goup">
+                    <label for="age">Age:</label>
+                    <input type="number" class="form-control" id="age" [ngModel]="profile?.age" (ngModelChange)="profile.age = $event" />
+                </div>
+                <div class="form-goup">
+                    <label for="address">Address:</label>
+                    <input type="text" class="form-control" id="address" [ngModel]="profile?.address" (ngModelChange)="profile.address = $event" />
+                </div>
+                <div class="form-goup">
+                    <label for="company">Company:</label>
+                    <input type="text" class="form-control" id="company" [ngModel]="profile?.company" (ngModelChange)="profile.company = $event" />
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-goup">
                     <label for="new_email_address">New email:</label>
                     <input type="email" class="form-control" id="new_email_address" [ngModel]="newEmailAddress" (ngModelChange)="newEmailAddress = $event" />
                 </div>
                 <br />
+                <button class="btn btn-default" (click)="update()">Update All</button>
                 <button class="btn btn-primary" (click)="addEmail()">Add email</button>
             </div>
         </div>
