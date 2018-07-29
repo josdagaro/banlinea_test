@@ -14,6 +14,7 @@ namespace User.Data
         public string Address { get; set; }
 
         [Required]
+        [RegularExpression(@"^[0-9]*$")]
         public int UserId { get; set; }
     }
 }
