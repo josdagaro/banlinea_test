@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using User.Data;
 
 namespace BanlineaTest.Controllers
@@ -20,14 +21,12 @@ namespace BanlineaTest.Controllers
             this.userDataContext = userDataContext;
         }
 
-        // GET: api/User
         [HttpGet]
         public IActionResult Get()
         {
             return Json(this.userDataContext.Users.ToList());
         }
 
-        // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(int id)
         {
@@ -39,7 +38,6 @@ namespace BanlineaTest.Controllers
             return Json(this.userDataContext.Users.Find(id));
         }
 
-        // GET: api/User/5/5
         [HttpGet("{id}/Emails", Name = "GetEmails")]
         public IActionResult GetEmails(int id)
         {
@@ -48,19 +46,44 @@ namespace BanlineaTest.Controllers
                 return NotFound();
             }
 
+            User.Data.User user = this.userDataContext.Users.AsNoTracking().Where(u => u.Id == id).First();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             var emails = this.userDataContext.Emails.Where(email => email.UserId == id).ToList();
             return Json(emails);
         }
 
-        // POST: api/User
         [HttpPost]
         public IActionResult Post([FromBody]User.Data.User user)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            List<User.Data.User> oldUsers = this.userDataContext.Users.AsNoTracking().Where(old => old.DocumentTypeId == user.DocumentTypeId && old.DocumentId == user.DocumentId).ToList();
+
+            if (oldUsers.Count() > 0)
+            {
+                foreach (var oldUser in oldUsers)
+                {
+                    if (oldUser.DocumentTypeId == user.DocumentTypeId && oldUser.DocumentId == user.DocumentId)
+                    {
+                        return BadRequest();
+                    }
+                }
+            }
+
+            this.userDataContext.Add(user);
             this.userDataContext.SaveChanges();
-            return Ok();
+            User.Data.User newUser = this.userDataContext.Users.AsNoTracking().Where(newU => newU.DocumentTypeId == user.DocumentTypeId && newU.DocumentId == user.DocumentId).First();
+            return Json(newUser);
         }
 
-        // POST: api/User
         [HttpPost("email/creation", Name = "CreateEmail")]
         public IActionResult CreateEmail([FromBody]User.Data.Email email)
         {
@@ -83,7 +106,6 @@ namespace BanlineaTest.Controllers
             }
         }
 
-        // PUT: api/User/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]User.Data.User user)
         {
@@ -96,13 +118,34 @@ namespace BanlineaTest.Controllers
             {
                 return BadRequest();
             }
+            else
+            {
+                User.Data.User oldU = this.userDataContext.Users.AsNoTracking().Where(u => u.Id == id).First();
+
+                if (oldU == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            List<User.Data.User> oldUsers = this.userDataContext.Users.AsNoTracking().Where(old => old.DocumentTypeId == user.DocumentTypeId && old.DocumentId == user.DocumentId).ToList();
+
+            if (oldUsers.Count() > 0)
+            {
+                foreach (var oldUser in oldUsers)
+                {
+                    if (oldUser.Id != user.Id && oldUser.DocumentTypeId == user.DocumentTypeId && oldUser.DocumentId == user.DocumentId)
+                    {
+                        return BadRequest();
+                    }
+                }
+            }
 
             this.userDataContext.Users.Update(user);
             this.userDataContext.SaveChanges();
             return Ok();
         }
 
-        // DELETE: api/User/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -111,7 +154,7 @@ namespace BanlineaTest.Controllers
                 return NotFound();
             }
 
-            User.Data.User user = this.userDataContext.Users.Find(id);
+            User.Data.User user = this.userDataContext.Users.AsNoTracking().Where(u => u.Id == id).First();
 
             if (user == null)
             {

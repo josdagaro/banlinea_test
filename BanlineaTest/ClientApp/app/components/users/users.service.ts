@@ -22,4 +22,8 @@ export class UsersService {
     public addEmail(email: object) {
         return this.http.post(this.baseUrl + 'api/User/email/creation', email);
     }
+
+    public create(user: object) {
+        return this.http.post(this.baseUrl + 'api/User', user);
+    }
 }

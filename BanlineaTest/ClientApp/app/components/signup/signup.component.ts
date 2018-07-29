@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
+import { UsersService } from '../users/users.service';
+import { User } from '../interfaces/user';
 
 @Component({
     selector: 'signup',
     templateUrl: './signup.component.html'
 })
 export class SignUpComponent {
+    private user: User;
+
     public name = null;
 
     public lastName = null;
@@ -21,14 +25,22 @@ export class SignUpComponent {
 
     public pwd = null;
 
-    constructor(session: SessionService, router: Router) {
+    constructor(session: SessionService, private router: Router, private usersService: UsersService) {
         if (session.user !== undefined && session.user.email !== undefined && session.user.name !== undefined) {
             router.navigate(['./profile']);
         }
     }
 
     public register() {
-
+        var user = { name: this.name, lastName: this.lastName, documentTypeId: this.documentTypeId, documentId: this.documentId, mobileNumber: this.mobileNumber, password: this.pwd };
+        this.usersService.create(user).subscribe(result => {
+            this.user = result.json() as User;
+            var email = { address: this.email, userId: this.user.id };
+            this.usersService.addEmail(email).subscribe(result => {
+                console.log(result)
+                this.router.navigate(['./signin']);
+            }, error => alert('The email could not be created'));
+        }, error => alert('User could not be created'));
     }
 
     public clean() {
