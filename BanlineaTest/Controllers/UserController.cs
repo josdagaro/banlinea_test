@@ -46,14 +46,29 @@ namespace BanlineaTest.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]User.Data.User user)
         {
+            if (id <= 0)
+            {
+                NotFound();
+            }
+
+            this.userDataContext.Users.Update(user);
+            Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            if (id <= 0)
+            {
+                NotFound();
+            }
+
+            User.Data.User user = this.userDataContext.Users.Find(id);
+            this.userDataContext.Users.Remove(user);
+            Ok();
         }
     }
 }
